@@ -16,6 +16,15 @@ To be Optimized:
 * [ ] Duplicate files should be dealt with properly.
 
 
+
+**File Types Currently Supported**
+
+Docs: text, txt, docx
+Compressed: zip
+Images: jpg, png, jpeg
+
+
+
 **File Types Currently Supported**
 
 Docs: text, txt, docx

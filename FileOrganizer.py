@@ -1,9 +1,8 @@
 import os
 import shutil
+import getpass
 
 def OptionMenu():
-
-    
 
     while(True):
 
@@ -31,27 +30,71 @@ def OptionMenu():
         else:
             print("Invalid Command")
 
+        possibleExit = input("Cleaning Completed... Continue? y/n:")
+
+        if possibleExit == 'N' or possibleExit == 'n': 
+            break
+
+
+
+#These are folders that should not be modified.
+def acceptedFolder(strFileName):
+    
+    if strFileName == "pdf":
+        return False
+    elif strFileName == "text":
+        return False
+    elif strFileName == "zips":
+        return False
+    else:
+        return True
+
+def rename_file( filename, newFileName ):
+
+    un = str( getpass.getuser() )
+    os.rename(f"/Users/{username}/Downloads/{filename}", f"/Users/{username}/Downloads/{newFileName}" )
     
     
 
 def Clean():
 
-    downloadDir = ('/Users/kevintang/Downloads')
-    for filename in os.listdir(downloadDir):
+    #Static Directory
 
-        try:
-            if image(filename):
-                shutil.move( f'/Users/kevintang/Downloads/{filename}' , '/Users/kevintang/Pictures')
-            elif pdf(filename):
-                shutil.move( f'/Users/kevintang/Downloads/{filename}', '/Users/kevintang/Downloads/pdf')
-            elif writings(filename):
-                shutil.move( f'/Users/kevintang/Downloads/{filename}', '/Users/kevintang/Downloads/text')
-            elif compressed(filename):
-                shutil.move( f'/Users/kevintang/Downloads/{filename}', '/Users/kevintang/Downloads/zips')
-            else:
-                shutil.move( f'/Users/kevintang/Downloads/{filename}', '/Users/kevintang/Downloads/junk')
-        except:
-            print("File you want to transfer already exists")
+    #grabs computer username
+    username = str( getpass.getuser() )
+
+    downloadDir = (f'/Users/{username}/Downloads')
+    for filename in os.listdir(downloadDir):
+        
+        strFileName = str(filename)
+
+        if acceptedFolder(strFileName):
+            try:
+                if image(filename):
+                    shutil.move( f'/Users/{username}/Downloads/{filename}' , f'/Users/{username}/Pictures')
+                elif pdf(filename):
+                    shutil.move( f'/Users/{username}/Downloads/{filename}', f'/Users/{username}/Downloads/pdf')
+                elif writings(filename):
+                    shutil.move( f'/Users/{username}/Downloads/{filename}', f'/Users/{username}/Downloads/text')
+                elif compressed(filename):
+                    shutil.move( f'/Users/{username}/Downloads/{filename}', f'/Users/{username}/Downloads/zips')
+                else:
+                    shutil.move( f'/Users/{username}/Downloads/{filename}', f'/Users/{username}/Downloads/junk')
+            except:
+
+                print("A file transfer contains a duplicate name.")
+                print("rename(r)")
+                print("overwrite(o)")
+                print("ignore(i)")
+
+                ROI = input()
+
+                if ROI == "r":
+                    #Implement store after renaming
+                    newFileName = input("New File Name: ")
+                    rename_file(filename, newFileName)
+
+
         
         
         
@@ -73,6 +116,8 @@ def image(filename):
     if filename.endswith(".jpg") or filename.endswith(".JPG"):
         return True
     elif filename.endswith(".png") or filename.endswith(".PNG"):
+        return True
+    elif filename.endswith(".jpeg") or filename.endswith(".JPEG"):
         return True
     else:
         return False
@@ -102,8 +147,9 @@ def compressed(filename):
                          
 
     
-    
-print("Testing git push")
+username = str( getpass.getuser() )
+downloadDir = (f'/Users/{username}/Downloads')
+print(downloadDir)
 OptionMenu()
 #os.remove('/Users/kevintang/Downloads/output-dp.txt')
 
