@@ -103,7 +103,7 @@ def compressed(filename):
 
     
     
-    
+print("Testing git push")
 OptionMenu()
 #os.remove('/Users/kevintang/Downloads/output-dp.txt')
 
